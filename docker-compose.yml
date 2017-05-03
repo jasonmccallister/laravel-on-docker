@@ -1,7 +1,7 @@
 version: '2'
 services:
 
-  app:
+  php-fpm:
     build:
       context: ./docker
       dockerfile: app.dockerfile
@@ -12,12 +12,13 @@ services:
     #   - "DB_PORT=3306"
     #   - "DB_HOST=database"
 
-  web:
+  nginx:
     build:
       context: ./docker
       dockerfile: web.dockerfile
     working_dir: /var/www
     volumes_from:
-      - app
+      - php-fpm
     ports:
-      - 8080:80
+      - 80:80
+      - 443:443
